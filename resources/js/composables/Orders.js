@@ -25,8 +25,8 @@ export default function useOrders() {
             await axios.post('/api/orders', data)
             await router.push({name: 'orders.index'})
         } catch (e) {
-            if (e.response.status === 422) {
-                errors.value = e.response.data.errors
+            if (e.response.data.success == false) {
+                errors.value = e.response.data.message
             }
         }
     }

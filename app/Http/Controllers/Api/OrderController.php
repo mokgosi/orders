@@ -9,6 +9,7 @@ use Validator;
 use App\Rules\PhoneNumber;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Validation\Rule;
 
 class OrderController extends BaseController
 {
@@ -36,7 +37,7 @@ class OrderController extends BaseController
         $validator = Validator::make($input, [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
-            'tracking_code' => 'required',
+            'tracking_code' => 'required|unique:orders',
             'contact_number' => ['required', new PhoneNumber],
 
         ]);
@@ -78,7 +79,10 @@ class OrderController extends BaseController
         $validator = Validator::make($input, [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
-            'tracking_code' => 'required',
+            'tracking_code' => [
+                'required', 
+                Rule::unique('orders', 'tracking_code')->ignore($order)
+            ],
             'contact_number' => ['required', new PhoneNumber],
         ]);
 

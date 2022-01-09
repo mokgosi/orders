@@ -1,7 +1,7 @@
 <template>
     <div class="overflow-hidden overflow-x-auto min-w-full align-middle sm:rounded-md">
         <div class="flex place-content-end mb-4">
-            <div class="px-4 py-2 text-white bg-indigo-50 hover:bg-indigo-700 cursor-pointer">
+            <div class="px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer">
                 <router-link :to="{ name: 'orders.create' }" class="text-sm font-medium">Create Order</router-link>
             </div>
         </div>

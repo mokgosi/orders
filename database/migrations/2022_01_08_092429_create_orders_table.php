@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->enum('status', ['new','processing','completed', 'declined'])->default('new');
-            $table->string('tracking_code');
+            $table->string('tracking_code')->unique();
             $table->integer('quantity');
             $table->string('description');
             $table->string('contact_number');

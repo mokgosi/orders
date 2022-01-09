@@ -25268,7 +25268,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $setup.order.tracking_code = $event;
-    })
+    }),
+    disabled: ""
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.order.tracking_code]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -25320,7 +25321,7 @@ var _hoisted_2 = {
   "class": "flex place-content-end mb-4"
 };
 var _hoisted_3 = {
-  "class": "px-4 py-2 text-white bg-indigo-50 hover:bg-indigo-700 cursor-pointer"
+  "class": "px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create Order");
@@ -25612,8 +25613,8 @@ function useOrders() {
               _context3.prev = 8;
               _context3.t0 = _context3["catch"](1);
 
-              if (_context3.t0.response.status === 422) {
-                errors.value = _context3.t0.response.data.errors;
+              if (_context3.t0.response.data.success == false) {
+                errors.value = _context3.t0.response.data.message;
               }
 
             case 11:

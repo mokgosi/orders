@@ -79,7 +79,7 @@ class OrderController extends BaseController
         $validator = Validator::make($input, [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
-            'tracking_code' => "required|unique:orders,tracking_code,{$order->id}", 
+            'tracking_code' => 'required|unique:orders,tracking_code,'.$order->id, 
             'contact_number' => ['required', new PhoneNumber],
         ]);
 

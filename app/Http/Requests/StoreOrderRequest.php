@@ -28,7 +28,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
-            'tracking_code' => 'required',
+            'tracking_code' => 'required|unique:orders|max:10',
             'contact_number' => ['required', new PhoneNumber],
             'address' => ''
         ];

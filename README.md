@@ -1,22 +1,22 @@
 ## Orders API
 
 
-## Requirements
+## Tools Used
 
-It is assumed that you have the following tools aready installed on your machine.
+It is assumed that you have the following tools or reasonable minimum versions already installed on your machine.
 
 •	PHP 8+<br>
 •	Laravel 8+<br>
-•	Nodejs<br>
-•	Git<br>
-•	NPM<br>
-•	Composer<br>
-•	MySQL/MariaDB<br>
+•	Node v14.18.2<br>
+•	Git 2.34.1<br>
+•	NPM 8.1.0<br>
+•	Composer 2.2.4<br>
+•	MySQL/MariaDB mysql  Ver 15.1 Distrib 10.3.32-MariaDB<br>
 
 
 ## NOTES
 
-•	No API Security like Sanctum token is required<br>
+•	No API Authentication mechanism like Sanctum token is required<br>
 
 
 ## Setup 
@@ -24,8 +24,8 @@ It is assumed that you have the following tools aready installed on your machine
 Setting up your development environment on your local machine: 
 
 ```
-$ git clone git@github.com:mokgosi/orders-eval.git
-$ cd orders-eval
+$ git clone git@github.com:mokgosi/orders.git
+$ cd orders
 $ cp .env.example .env
 
 ```
@@ -75,6 +75,51 @@ $ php artisan serve
 
 ## Finally
 
-Browse to http://localhost:8000  to test the app
+Browse to http://localhost:8000 to test the app  OR  open Postman and test the following endpoints
+
+**Get All Orders**
+
+GET http://localhost:8000/api/orders/
+
+**Get One Order**
+
+GET http://localhost:8000/api/orders/1
+
+**Create Order**
+
+POST http://localhost:8000/api/orders/
+
+```
+{
+    "id": 1,
+    "tracking_code": "96504017",
+    "quantity": 6,
+    "description": "Shoess",
+    "contact_number": "+27110112525",
+    "address": "123 street suburb 0113"
+}
+
+```
+
+**Update Order**
+
+PUT http://localhost:8000/api/orders/1
+
+```
+{
+    "id": 1,
+    "status": "processing",
+    "tracking_code": "96504017",
+    "quantity": 6,
+    "description": "Shoess",
+    "contact_number": "+27110112525",
+    "address": "123 street suburb 0113"
+}
+
+```
+
+**Delete Order**
+
+DELETE http://localhost:8000/api/orders/1
 
 

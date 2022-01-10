@@ -1,50 +1,58 @@
 <?php
-   
-namespace App\Http\Controllers\API;
-   
-use Illuminate\Http\Request;
-use App\Http\Controllers\API\BaseController as BaseController;
-use Illuminate\Support\Facades\Auth;
-use Validator;
+
+namespace App\Http\Controllers\Api;
+
 use App\Models\User;
-   
-class AuthController extends BaseController
+use App\Traits\ApiResponser;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
 {
+    use ApiResponser;
 
-    public function signin(Request $request)
+    public function register(Request $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-            $authUser = Auth::user(); 
-            $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken; 
-            $success['name'] =  $authUser->name;
-   
-            return $this->sendResponse($success, 'User signed in');
-        } 
-        else{ 
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
-        } 
-    }
-
-    public function signup(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
+        $attr = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed'
         ]);
-   
-        if($validator->fails()){
-            return $this->sendError('Error validation', $validator->errors());       
-        }
-   
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
-        $success['name'] =  $user->name;
-   
-        return $this->sendResponse($success, 'User created successfully.');
+
+        $user = User::create([
+            'name' => $attr['name'],
+            'password' => bcrypt($attr['password']),
+            'email' => $attr['email']
+        ]);
+
+        return $this->success([
+            'token' => $user->createToken('API Token')->plainTextToken
+        ]);
     }
-   
+
+    public function login(Request $request)
+    {
+        $attr = $request->validate([
+            'email' => 'required|string|email|',
+            'password' => 'required|string|min:6'
+        ]);
+
+        if (!Auth::attempt($attr)) {
+            return $this->error('Credentials not match', 401);
+        }
+
+        return $this->success([
+            'token' => auth()->user()->createToken('API Token')->plainTextToken
+        ]);
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'Tokens Revoked'
+        ];
+    }
 }

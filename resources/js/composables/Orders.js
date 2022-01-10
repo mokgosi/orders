@@ -11,7 +11,8 @@ export default function useOrders() {
 
     const getOrders = async () => {
         let response = await axios.get('/api/orders')
-        orders.value = response.data.data
+
+        orders.value = response.data.data.data
     }
 
     const getOrder = async (id) => {
@@ -25,8 +26,8 @@ export default function useOrders() {
             await axios.post('/api/orders', data)
             await router.push({name: 'orders.index'})
         } catch (e) {
-            if (e.response.data.success == false) {
-                errors.value = e.response.data.message
+            if (e.response.status === 422) {
+                errors.value = e.response.data.errors
             }
         }
     }
@@ -37,8 +38,8 @@ export default function useOrders() {
             await axios.put('/api/orders/' + id, order.value)
             await router.push({name: 'orders.index'})
         } catch (e) {
-            if (e.response.data.success == false) {
-                errors.value = e.response.data.message
+            if (e.response.status === 422) {
+                errors.value = e.response.data.errors
             }
         }
     }

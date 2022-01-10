@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\PhoneNumber;
+use Illuminate\Validation\Rule;
 
 class UpdateOrderRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,8 +28,11 @@ class UpdateOrderRequest extends FormRequest
         return [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
-            'tracking_code' => 'required',
+            'tracking_code' => [
+                'required',
+		        Rule::unique('orders', 'tracking_code')->ignore($this->order)], 
             'contact_number' => ['required', new PhoneNumber],
+            'address' => ''
         ];
     }
 }

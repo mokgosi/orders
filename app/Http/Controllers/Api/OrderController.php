@@ -10,9 +10,13 @@ use App\Rules\PhoneNumber;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use Illuminate\Validation\Rule;
+use App\Traits\ApiResponser;
+use App\Http\Controllers\Controller;
 
-class OrderController extends BaseController
+class OrderController extends Controller
 {
+    use ApiResponser;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +25,10 @@ class OrderController extends BaseController
     public function index()
     {
         $orders = Order::all();
-        return $this->sendResponse(OrderResource::collection($orders), 'Orders fetched.');
+
+        return $this->success([
+            'data' => OrderResource::collection($orders)
+        ], 'Orders fetched');
     }
 
     /**
@@ -30,24 +37,13 @@ class OrderController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
-        $input = $request->all();
-        
-        $validator = Validator::make($input, [
-            'description' => 'required|min:3|max:255',
-            'quantity' => 'required|integer',
-            'tracking_code' => 'required|unique:orders',
-            'contact_number' => ['required', new PhoneNumber],
+        $order = Order::create($request->validated());
 
-        ]);
-        if($validator->fails()){
-            return $this->sendError($validator->errors());       
-        }
-
-        $order = Order::create($input);
-
-        return $this->sendResponse(new OrderResource($order), 'Order created.');
+        return $this->success([
+            new OrderResource($order)
+        ], 'Order created successfully.');
     }
 
     /**
@@ -60,42 +56,33 @@ class OrderController extends BaseController
     {
         $order = Order::find($id);
         if (is_null($order)) {
-            return $this->sendError('Order does not exist.');
+            return $this->error('Order not found.', 404);
         }
-        return $this->sendResponse(new OrderResource($order), 'Order fetched.');
+        return $this->success(
+            new OrderResource($order)
+        , 'Order fetched successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Order  $order
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(UpdateOrderRequest $request, $id)
     {
-        $input = $request->all();
+        $order = Order::find($id);
 
-        $validator = Validator::make($input, [
-            'description' => 'required|min:3|max:255',
-            'quantity' => 'required|integer',
-            'tracking_code' => 'required|unique:orders,tracking_code,'.$order->id, 
-            'contact_number' => ['required', new PhoneNumber],
-        ]);
-
-        if($validator->fails()){
-            return $this->sendError($validator->errors());       
+        if (is_null($order)) {
+            return $this->error('Order not found.', 404);
+        } else {
+            $order->update($request->validated());
         }
 
-        $order->description = $input['description'];
-        $order->quantity = $input['quantity'];
-        $order->status = $input['status'];
-        $order->tracking_code = $input['tracking_code'];
-        $order->contact_number = $input['contact_number'];
-        $order->address = $input['address'];
-        $order->save();
-        
-        return $this->sendResponse(new OrderResource($order), 'Order updated.');
+        return $this->success([
+            new OrderResource($order)
+        ], 'Order updated successfully.');
     }
 
     /**
@@ -106,10 +93,18 @@ class OrderController extends BaseController
      */
     public function destroy($id)
     {
-        Order::destroy($id);
-        return $this->sendResponse([], 'Order deleted.');
+        $order = Order::find($id);
+        if (is_null($order)) {
+            return $this->error('Order not found.', 404);
+        } else {
+            $order->delete();
+        }
+        return $this->success([
+            new OrderResource($order)
+        ], 'Order deleted successfully.');
     }
 }
+
 
 
 

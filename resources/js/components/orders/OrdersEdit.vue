@@ -33,7 +33,7 @@
             </div>
 
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Quantity</label>
+                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
                 <div class="mt-1">
                     <input type="text" name="quantity" id="quantity"
                            class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -42,7 +42,7 @@
             </div>
 
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Tracking Code</label>
+                <label for="tracking_code" class="block text-sm font-medium text-gray-700">Tracking Code</label>
                 <div class="mt-1">
                     <input type="text" name="tracking_code" id="tracking_code"
                            class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -51,7 +51,7 @@
             </div>
 
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                <label for="contact_number" class="block text-sm font-medium text-gray-700">Contact Number</label>
                 <div class="mt-1">
                     <input type="text" name="contact_number" id="contact_number"
                            class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

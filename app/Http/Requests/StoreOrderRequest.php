@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\PhoneNumber;
-use Illuminate\Contracts\Validation\Validator;
 
 class StoreOrderRequest extends FormRequest
 {
@@ -28,9 +27,9 @@ class StoreOrderRequest extends FormRequest
         return [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
-            'tracking_code' => 'required|unique:orders|max:10',
+            'tracking_code' => 'required|unique:orders,tracking_code',
             'contact_number' => ['required', new PhoneNumber],
             'address' => ''
-        ];
+         ];
     }
 }

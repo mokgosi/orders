@@ -25160,7 +25160,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVN
 var _hoisted_12 = [_hoisted_7];
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "email",
+  "for": "quantity",
   "class": "block text-sm font-medium text-gray-700"
 }, "Quantity", -1
 /* HOISTED */
@@ -25171,7 +25171,7 @@ var _hoisted_14 = {
 };
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "email",
+  "for": "tracking_code",
   "class": "block text-sm font-medium text-gray-700"
 }, "Tracking Code", -1
 /* HOISTED */
@@ -25182,7 +25182,7 @@ var _hoisted_16 = {
 };
 
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "email",
+  "for": "contact_number",
   "class": "block text-sm font-medium text-gray-700"
 }, "Contact Number", -1
 /* HOISTED */
@@ -25546,7 +25546,7 @@ function useOrders() {
 
             case 2:
               response = _context.sent;
-              orders.value = response.data.data;
+              orders.value = response.data.data.data;
 
             case 4:
             case "end":
@@ -25613,8 +25613,8 @@ function useOrders() {
               _context3.prev = 8;
               _context3.t0 = _context3["catch"](1);
 
-              if (_context3.t0.response.data.success == false) {
-                errors.value = _context3.t0.response.data.message;
+              if (_context3.t0.response.status === 422) {
+                errors.value = _context3.t0.response.data.errors;
               }
 
             case 11:
@@ -25655,8 +25655,8 @@ function useOrders() {
               _context4.prev = 8;
               _context4.t0 = _context4["catch"](1);
 
-              if (_context4.t0.response.data.success == false) {
-                errors.value = _context4.t0.response.data.message;
+              if (_context4.t0.response.status === 422) {
+                errors.value = _context4.t0.response.data.errors;
               }
 
             case 11:

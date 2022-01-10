@@ -3,6 +3,8 @@
 
 ## Requirements
 
+It is assumed that you have the following tools aready installed on your machine.
+
 •	PHP 8+<br>
 •	Laravel 8+<br>
 •	Nodejs<br>
@@ -10,6 +12,11 @@
 •	NPM<br>
 •	Composer<br>
 •	MySQL/MariaDB<br>
+
+
+## NOTES
+
+•	No API Security like Sanctum token is required<br>
 
 
 ## Setup 
@@ -69,3 +76,5 @@ $ php artisan serve
 ## Finally
 
 Browse to http://localhost:8000  to test the app
+
+

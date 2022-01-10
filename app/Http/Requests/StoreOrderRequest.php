@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\PhoneNumber;
+use Illuminate\Contracts\Validation\Validator;
 
 class StoreOrderRequest extends FormRequest
 {

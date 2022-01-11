@@ -25533,6 +25533,8 @@ function useOrders() {
   var orders = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
   var errors = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)('');
   var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
+  var token = localStorage.getItem('sanctum_token');
+  window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
 
   var getOrders = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {

@@ -9,7 +9,12 @@ export default function useOrders() {
     const errors = ref('')
     const router = useRouter()
 
+    const token = localStorage.getItem('sanctum_token')
+
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
     const getOrders = async () => {
+        
         let response = await axios.get('/api/orders')
 
         orders.value = response.data.data.data
@@ -23,6 +28,7 @@ export default function useOrders() {
     const storeOrder = async (data) => {
         errors.value = ''
         try {
+            
             await axios.post('/api/orders', data)
             await router.push({name: 'orders.index'})
         } catch (e) {

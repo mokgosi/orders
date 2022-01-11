@@ -73,6 +73,7 @@ import { onMounted } from "vue";
 
 export default {
     setup() {
+
         const { orders, getOrders, destroyOrder } = useOrders()
 
         onMounted(getOrders)

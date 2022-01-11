@@ -14,11 +14,6 @@ It is assumed that you have the following tools or reasonable minimum versions a
 •	MySQL/MariaDB mysql  Ver 15.1 Distrib 10.3.32-MariaDB<br>
 
 
-## NOTES
-
-•	No API Authentication mechanism like Sanctum token is required<br>
-
-
 ## Setup 
 
 Setting up your development environment on your local machine: 
@@ -76,6 +71,32 @@ $ php artisan serve
 ## Finally
 
 Browse to http://localhost:8000 to test the app  OR  open Postman and test the following endpoints
+
+**Register**
+
+POST http://localhost:8000/api/auth/register
+
+Use returned token to perform CRUD operations.
+
+```
+{
+    "name": "Super",
+    "email": "super@mail.com",
+    "password": "TestPassword",
+    "password_confirmation": "TestPassword"
+}
+```
+
+**Login**
+
+Use returned token to perform CRUD operations.
+
+```
+{
+    "email": "super@mail.com",
+    "password": "TestPassword"
+}
+```
 
 **Get All Orders**
 

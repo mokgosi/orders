@@ -28,6 +28,7 @@ class UpdateOrderRequest extends FormRequest
         return [
             'description' => 'required|min:3|max:255',
             'quantity' => 'required|integer',
+            'status' => '',
             'tracking_code' => [
                 'required',
 		        Rule::unique('orders', 'tracking_code')->ignore($this->order)], 
